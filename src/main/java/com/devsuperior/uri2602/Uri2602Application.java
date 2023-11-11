@@ -42,15 +42,17 @@ public class Uri2602Application implements CommandLineRunner{
 //			}
 		
 		try {
-			List<CustomerMinProjection> list = repository.search1("RS");
+			
+			List<CustomerMinProjection> list = repository.searchSQL("RS");
 		
+			System.out.println("\n*** RESULTADO SQL RAIZ:");
 			for (CustomerMinProjection obj : list) {
 				System.out.println(obj.getName());
 			}
 			
-			List<CustomerMinDTO> result1 = list.stream().map(x -> new CustomerMinDTO(x)).collect(Collectors.toList());
+			List<CustomerMinDTO> resultSQL = list.stream().map(x -> new CustomerMinDTO(x)).collect(Collectors.toList());
 			
-			for (CustomerMinDTO obj: result1) {
+			for (CustomerMinDTO obj: resultSQL) {
 				// chama o getstring direto
 				System.out.println(obj);
 			}
@@ -59,6 +61,17 @@ public class Uri2602Application implements CommandLineRunner{
 		{
 			System.out.println("Erro de leitura:" + e.toString());
 		}
+		
+		System.out.println("\n\n");
+		
+		List<CustomerMinDTO> resultJPQL = repository.searchJPQL("rs");
+		
+		System.out.println("\n***  RESULTADO JPQL:");
+		for (CustomerMinDTO obj: resultJPQL) {
+			// chama o getstring direto
+			System.out.println(obj);
+		}
+		
 	
 		
 	}
